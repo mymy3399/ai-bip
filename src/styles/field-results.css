@@ -1,0 +1,555 @@
+/* field-results.css - Candidate list results page */
+
+.candidate-list-page {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.search-context-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  background: var(--surface-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-panel);
+}
+
+.context-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 150px;
+}
+
+.context-icon {
+  color: var(--tactical-blue);
+}
+
+.context-item small {
+  display: block;
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+
+.context-item strong {
+  display: block;
+  color: var(--text);
+  font-size: 14px;
+}
+
+.candidate-list-workspace {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+.candidate-list-header {
+  margin-bottom: 16px;
+}
+
+.candidate-list-header h3 {
+  margin: 0;
+  font-size: 18px;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.candidate-list-header small {
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+.candidate-cards-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.candidate-list-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px;
+  background: var(--navy-900);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.candidate-list-card:hover {
+  background: var(--surface-elevated);
+}
+
+.candidate-list-card.selected {
+  background: var(--tactical-blue-glow);
+  border-color: var(--tactical-blue);
+}
+
+.card-checkbox {
+  flex-shrink: 0;
+}
+
+.checkbox-box {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--navy-850);
+  color: transparent;
+  font-size: 12px;
+}
+
+.checkbox-box.checked {
+  background: var(--tactical-blue);
+  border-color: var(--tactical-blue);
+  color: #fff;
+}
+
+.card-thumbnail {
+  width: 60px;
+  height: 60px;
+  border-radius: var(--radius-sm);
+  object-fit: cover;
+}
+
+.candidate-image-button,
+.large-portrait-button {
+  position: relative;
+  display: block;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: zoom-in;
+}
+
+.candidate-image-button > svg {
+  position: absolute;
+  right: 4px;
+  bottom: 4px;
+  padding: 2px;
+  color: #fff;
+  background: rgba(6, 11, 23, .72);
+  border-radius: 4px;
+  opacity: 0;
+  transition: opacity 160ms ease;
+}
+
+.candidate-list-card:hover .candidate-image-button > svg,
+.candidate-image-button:focus-visible > svg {
+  opacity: 1;
+}
+
+.card-details {
+  flex: 1;
+}
+
+.card-details h4 {
+  margin: 0 0 4px;
+  font-size: 15px;
+  color: var(--text);
+}
+
+.candidate-citizen-id,
+.citizen-id-detail {
+  display: block;
+  color: var(--text-secondary);
+  font-size: 12px;
+  letter-spacing: .02em;
+}
+
+.citizen-id-detail {
+  margin: -2px 0 12px;
+  color: var(--accent, #58a6ff);
+  font-weight: 600;
+}
+
+.similarity-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+.similarity-wrap small {
+  color: var(--text-secondary);
+}
+
+.similarity-wrap strong {
+  color: var(--success);
+}
+
+.view-link {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--tactical-blue);
+}
+
+.btn-search-again {
+  width: 100%;
+  padding: 10px;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.btn-search-again:hover {
+  background: var(--surface-elevated);
+}
+
+.candidate-detail-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.candidate-detail-header h3 {
+  margin: 0;
+  font-size: 20px;
+  color: var(--text);
+}
+
+.pending-verification-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--amber-bg);
+  color: var(--amber);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.candidate-identity-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 24px;
+  padding: 20px;
+  background: var(--navy-900);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+}
+
+.large-portrait {
+  width: 120px;
+  height: 120px;
+  border-radius: var(--radius-md);
+  object-fit: cover;
+}
+
+.large-portrait-button span {
+  position: absolute;
+  right: 6px;
+  bottom: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 6px;
+  color: #fff;
+  background: rgba(6, 11, 23, .74);
+  border-radius: 4px;
+  font-size: 10px;
+  opacity: 0;
+  transition: opacity 160ms ease;
+}
+
+.large-portrait-button:hover span,
+.large-portrait-button:focus-visible span {
+  opacity: 1;
+}
+
+.candidate-modal-close,
+.candidate-mobile-backdrop {
+  display: none;
+}
+
+.image-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: grid;
+  place-items: center;
+  padding: 32px;
+  background: rgba(2, 6, 23, .86);
+  backdrop-filter: blur(10px);
+}
+
+.image-lightbox img {
+  width: min(92vw, 760px);
+  height: min(86vh, 760px);
+  object-fit: contain;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, .55);
+}
+
+.image-lightbox-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  color: #fff;
+  background: rgba(15, 25, 46, .85);
+  border: 1px solid rgba(255, 255, 255, .25);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.identity-copy {
+  flex: 1;
+  min-width: 200px;
+}
+
+.identity-copy h2 {
+  margin: 0 0 8px;
+  font-size: 24px;
+  color: var(--text);
+}
+
+.demographics-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--text-secondary);
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+
+.divider {
+  color: var(--border);
+}
+
+.warrant-alert-banner, .clean-alert-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+}
+
+.warrant-alert-banner {
+  background: var(--danger-bg);
+  color: var(--danger);
+  border: 1px solid rgba(248, 113, 113, 0.3);
+}
+
+.clean-alert-banner {
+  background: var(--success-bg);
+  color: var(--success);
+  border: 1px solid rgba(52, 211, 153, 0.3);
+}
+
+.source-breakdown-section {
+  margin-bottom: 24px;
+}
+
+.source-breakdown-section h4 {
+  margin: 0 0 12px;
+  font-size: 16px;
+  color: var(--text);
+}
+
+.source-table {
+  background: var(--navy-900);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.table-header-row {
+  display: grid;
+  grid-template-columns: 2fr 2fr 1fr;
+  padding: 12px 16px;
+  background: var(--surface-elevated);
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-weight: bold;
+}
+
+.table-data-row {
+  display: grid;
+  grid-template-columns: 2fr 2fr 1fr;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+  align-items: center;
+}
+
+.table-data-row:last-child {
+  border-bottom: none;
+}
+
+.source-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text);
+}
+
+.source-icon {
+  color: var(--text-muted);
+}
+
+.source-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.status-warrant { color: var(--danger); }
+.status-partial { color: var(--amber); }
+.status-clean { color: var(--success); }
+
+.source-similarity {
+  color: var(--text-muted);
+}
+
+.table-footnote {
+  display: block;
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.candidate-action-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.btn-open-detail, .btn-formal-verification {
+  padding: 12px 20px;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 200px;
+  justify-content: center;
+}
+
+.btn-open-detail {
+  background: var(--tactical-blue);
+  color: #fff;
+  border: none;
+}
+
+.btn-formal-verification {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+.bottom-disclaimer-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 24px;
+  padding: 16px;
+  background: var(--surface-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  font-size: 13px;
+  box-shadow: var(--shadow-panel);
+}
+
+@media (min-width: 900px) {
+  .candidate-list-workspace {
+    grid-template-columns: 350px 1fr;
+  }
+}
+
+@media (max-width: 899px) {
+  .candidate-mobile-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 55;
+    display: block;
+    background: rgba(2, 6, 23, .68);
+    backdrop-filter: blur(3px);
+  }
+
+  .candidate-right-panel {
+    display: none;
+  }
+
+  .candidate-right-panel.is-open {
+    position: fixed;
+    inset: 12px;
+    z-index: 60;
+    display: block;
+    overflow-y: auto;
+    padding: 18px;
+    animation: candidate-modal-in 180ms ease-out;
+  }
+
+  .candidate-modal-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    color: var(--text-secondary);
+    background: var(--surface-elevated);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  .candidate-detail-header {
+    padding-right: 42px;
+  }
+
+  .candidate-identity-section {
+    gap: 14px;
+    padding: 14px;
+  }
+
+  .large-portrait-button,
+  .large-portrait {
+    width: 96px;
+    height: 96px;
+  }
+}
+
+@keyframes candidate-modal-in {
+  from { opacity: 0; transform: translateY(12px) scale(.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}

@@ -1,0 +1,101 @@
+:root, [data-theme="dark"] {
+  font-family: 'Sarabun', system-ui, sans-serif;
+  color-scheme: dark;
+
+  /* Dark Palette - 5 clearly separated layers */
+  --navy-950: #060b17;       /* body/page bg */
+  --navy-900: #0f192e;       /* sidebar, topbar */
+  --navy-850: #15223d;       /* card surface */
+  --navy-800: #1c2d52;       /* elevated card, hover */
+  --navy-700: #263c6c;       /* subtle accent bg */
+
+  --tactical-blue: #38bdf8;
+  --tactical-blue-glow: rgba(56, 189, 248, 0.2);
+  --blue-600: #0284c7;
+  --blue-700: #0369a1;
+
+  /* Semantic surfaces */
+  --surface: #060b17;
+  --surface-card: #15223d;      /* cards: clearly lighter than page */
+  --surface-elevated: #1c2d52;  /* hover state */
+  --surface-subtle: #0f192e;
+  --biometric-surface: #0b1220;
+
+  /* Text — Ultra High Contrast Night Mode */
+  --text: #ffffff;              /* pure crisp white for headers */
+  --text-secondary: #cbd5e1;    /* bright slate-200 for labels & subtext */
+  --text-muted: #94a3b8;        /* slate-400 for timestamps & footers */
+
+  /* Borders — visible against card backgrounds */
+  --border: #263c6c;
+  --border-strong: #38bdf8;
+  --border-light: rgba(255, 255, 255, 0.12);
+
+  --success: #34d399;
+  --success-bg: rgba(52, 211, 153, 0.16);
+  --amber: #fbbf24;
+  --amber-bg: rgba(251, 191, 36, 0.16);
+  --danger: #f87171;
+  --danger-bg: rgba(248, 113, 113, 0.16);
+  --gold: #fbbf24;
+
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+
+  --shadow-panel: 0 6px 24px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(56, 189, 248, 0.12);
+  --sidebar-width: 240px;
+  --topbar-height: 64px;
+  --bottom-nav-height: 68px;
+  --focus-ring: 0 0 0 3px rgba(56, 189, 248, 0.35);
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+
+  --navy-950: #f1f5f9;       /* page bg */
+  --navy-900: #ffffff;       /* sidebar, topbar */
+  --navy-850: #ffffff;       /* card */
+  --navy-800: #f8fafc;       /* elevated */
+  --navy-700: #e2e8f0;
+
+  --tactical-blue: #1d4ed8;
+  --tactical-blue-glow: rgba(29, 78, 216, 0.12);
+  --blue-700: #1d4ed8;
+  --blue-600: #2563eb;
+  --blue-100: #dbeafe;
+  --blue-50: #eff6ff;
+
+  --surface: #f1f5f9;
+  --surface-card: #ffffff;
+  --surface-elevated: #f8fafc;
+  --surface-subtle: #f1f5f9;
+  --biometric-surface: #ffffff;
+  --surface-muted: #cbd5e1;
+
+  /* Text — High Contrast Day Mode */
+  --text: #0f172a;              /* slate-900 */
+  --text-secondary: #334155;    /* slate-700 */
+  --text-muted: #64748b;        /* slate-500 */
+
+  /* Borders visible on white */
+  --border: #cbd5e1;            /* slate-300 */
+  --border-strong: #64748b;
+  --border-light: rgba(15, 23, 42, 0.08);
+
+  --success: #059669;
+  --success-bg: #dcfce7;
+  --amber: #b45309;
+  --amber-bg: #fef3c7;
+  --danger: #dc2626;
+  --danger-bg: #fee2e2;
+  --gold: #d97706;
+
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --shadow-panel: 0 4px 16px rgba(15, 23, 42, 0.08), 0 0 0 1px rgba(15, 23, 42, 0.08);
+  --focus-ring: 0 0 0 3px rgba(37, 99, 235, 0.25);
+}
