@@ -3,21 +3,21 @@
   "short_name": "AI-BIP",
   "description": "ระบบสนับสนุนงานตำรวจและการคัดกรองข้อมูลภาคสนาม",
   "lang": "th",
-  "start_url": "/",
-  "scope": "/",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "orientation": "any",
   "background_color": "#060b17",
   "theme_color": "#071f3c",
   "icons": [
     {
-      "src": "/icons/ai-bip-mark.png",
+      "src": "icons/ai-bip-mark.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "/icons/ai-bip-mark.png",
+      "src": "icons/ai-bip-mark.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"

@@ -1,5 +1,7 @@
 const CACHE_NAME = 'ai-bip-shell-v2'
-const APP_SHELL = ['/', '/index.html', '/manifest.webmanifest', '/icons/ai-bip-mark.png']
+const BASE_PATH = new URL('./', self.location.href).pathname
+const appPath = (path) => `${BASE_PATH}${path}`
+const APP_SHELL = ['', 'index.html', 'manifest.webmanifest', 'icons/ai-bip-mark.png'].map(appPath)
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
@@ -28,10 +30,10 @@ self.addEventListener('fetch', (event) => {
       fetch(event.request)
         .then((response) => {
           const copy = response.clone()
-          caches.open(CACHE_NAME).then((cache) => cache.put('/index.html', copy))
+          caches.open(CACHE_NAME).then((cache) => cache.put(appPath('index.html'), copy))
           return response
         })
-        .catch(() => caches.match('/index.html')),
+        .catch(() => caches.match(appPath('index.html'))),
     )
     return
   }

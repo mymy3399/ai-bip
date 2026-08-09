@@ -1,7 +1,9 @@
 import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
-export default defineConfig({
+import { loadEnv as loadViteEnv } from 'vite';
+export default defineConfig(({ mode }) => ({
     plugins: [react()],
+    base: loadViteEnv(mode, '.').VITE_BASE_PATH ?? '/',
     server: {
         host: '0.0.0.0',
         port: 5180,
@@ -18,4 +20,4 @@ export default defineConfig({
         css: true,
         globals: true,
     },
-});
+}));
