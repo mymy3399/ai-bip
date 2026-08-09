@@ -1,7 +1,5 @@
 import { useState } from 'react'
 import {
-  AlertTriangle,
-  ArrowLeft,
   Calendar,
   Camera,
   CheckCircle2,
@@ -9,14 +7,12 @@ import {
   Clock,
   CreditCard,
   Database,
-  FileCheck2,
   FileText,
   Globe,
   HelpCircle,
   IdCard,
   Info,
   RefreshCw,
-  Search,
   Shield,
   ShieldAlert,
   ShieldCheck,
@@ -29,6 +25,8 @@ import { useNavigate } from 'react-router-dom'
 import candidate1 from '../../assets/candidate-1.png'
 import candidate2 from '../../assets/candidate-2.png'
 import candidate3 from '../../assets/candidate-3.png'
+import { getSearchMethodLabel, getSearchNameLabel, getVisibleCandidateIds, isOneToOneSearch, readFieldResult } from './fieldResultsStorage'
+import { ImageFrame } from '../../components/ImageFrame'
 
 const mockCandidatesList = [
   {
@@ -87,60 +85,6 @@ const mockCandidatesList = [
   },
 ]
 
-function getVisibleCandidates() {
-  const rawResult = sessionStorage.getItem('ai-bip-field-result')
-  if (!rawResult) return mockCandidatesList
-
-  try {
-    const result = JSON.parse(rawResult) as { candidates?: Array<{ id: string }> }
-    const resultIds = new Set(result.candidates?.map((candidate) => candidate.id))
-    const filtered = mockCandidatesList.filter((candidate) => resultIds.has(candidate.id))
-    return filtered.length > 0 ? filtered : mockCandidatesList
-  } catch {
-    return mockCandidatesList
-  }
-}
-
-function getSearchMethodLabel() {
-  const rawResult = sessionStorage.getItem('ai-bip-field-result')
-  if (!rawResult) return 'Face + Name Screening'
-
-  try {
-    const result = JSON.parse(rawResult) as { searchMethods?: string[] }
-    return result.searchMethods?.length ? result.searchMethods.join(' + ') : 'Field Screening'
-  } catch {
-    return 'Field Screening'
-  }
-}
-
-function getSearchNameLabel() {
-  const rawResult = sessionStorage.getItem('ai-bip-field-result')
-  if (!rawResult) return 'ไม่ได้ใช้ชื่อค้นหา'
-
-  try {
-    const result = JSON.parse(rawResult) as {
-      searchMethods?: string[]
-      searchQuery?: { fullName?: string; citizenId?: string }
-    }
-    if (!result.searchMethods?.includes('ID Card')) return 'ไม่ได้ใช้ชื่อค้นหา'
-    return result.searchQuery?.fullName || (result.searchQuery?.citizenId ? 'ค้นด้วยเลขประชาชน' : 'ไม่ได้ใช้ชื่อค้นหา')
-  } catch {
-    return 'ไม่ได้ใช้ชื่อค้นหา'
-  }
-}
-
-function isOneToOneSearch() {
-  const rawResult = sessionStorage.getItem('ai-bip-field-result')
-  if (!rawResult) return false
-
-  try {
-    const result = JSON.parse(rawResult) as { searchMethods?: string[] }
-    return result.searchMethods?.length === 1 && result.searchMethods[0] === 'ID Card'
-  } catch {
-    return false
-  }
-}
-
 export function FieldResultsPage() {
   const navigate = useNavigate()
   const [selectedIdx, setSelectedIdx] = useState(0)
@@ -148,11 +92,14 @@ export function FieldResultsPage() {
   const [showCandidateModal, setShowCandidateModal] = useState(false)
   const [imageModal, setImageModal] = useState<{ src: string; alt: string } | null>(null)
 
-  const candidateList = getVisibleCandidates()
-  const selectedCandidate = candidateList[selectedIdx] ?? candidateList[0]
-  const searchMethodLabel = getSearchMethodLabel()
-  const searchNameLabel = getSearchNameLabel()
-  const oneToOneSearch = isOneToOneSearch()
+  const fieldResult = readFieldResult()
+  const resultIds = getVisibleCandidateIds(fieldResult)
+  const filteredCandidates = resultIds ? mockCandidatesList.filter((candidate) => resultIds.has(candidate.id)) : mockCandidatesList
+  const candidateList = filteredCandidates.length > 0 ? filteredCandidates : mockCandidatesList
+  const selectedCandidate = candidateList.at(selectedIdx) ?? candidateList.at(0)!
+  const searchMethodLabel = getSearchMethodLabel(fieldResult)
+  const searchNameLabel = getSearchNameLabel(fieldResult)
+  const oneToOneSearch = isOneToOneSearch(fieldResult)
 
   return (
     <div className="candidate-list-page page-enter">
@@ -240,7 +187,7 @@ export function FieldResultsPage() {
                   }}
                   aria-label={`ขยายรูป ${item.title}`}
                 >
-                  <img src={item.img} alt={item.title} className="card-thumbnail" />
+                  <ImageFrame src={item.img} alt={item.title} className="card-thumbnail" />
                   <ZoomIn size={14} />
                 </button>
 
@@ -286,7 +233,7 @@ export function FieldResultsPage() {
               onClick={() => setImageModal({ src: selectedCandidate.img, alt: selectedCandidate.name })}
               aria-label={`ขยายรูป ${selectedCandidate.name}`}
             >
-              <img src={selectedCandidate.img} alt={selectedCandidate.name} className="large-portrait" />
+              <ImageFrame src={selectedCandidate.img} alt={selectedCandidate.name} className="large-portrait" />
               <span><ZoomIn size={15} /> ขยายรูป</span>
             </button>
 
@@ -425,7 +372,7 @@ export function FieldResultsPage() {
           <button type="button" className="image-lightbox-close" onClick={() => setImageModal(null)} aria-label="ปิดภาพขนาดใหญ่">
             <X size={22} />
           </button>
-          <img src={imageModal.src} alt={imageModal.alt} onClick={(event) => event.stopPropagation()} />
+          <ImageFrame src={imageModal.src} alt={imageModal.alt} onClick={(event) => event.stopPropagation()} />
         </div>
       )}
     </div>

@@ -1,46 +1,18 @@
 import { useEffect, useState } from 'react'
-import { ArrowRight, Camera, Check, Clock, Database, Eye, Fingerprint, IdCard, MapPin, Network, RefreshCw, Scan, Search, ShieldAlert, SlidersHorizontal, Upload, UserRound, Video } from 'lucide-react'
+import { ArrowRight, Camera, Check, Clock, Fingerprint, IdCard, MapPin, Network, RefreshCw, Scan, Search, UserRound } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
-import candidate1 from '../../assets/candidate-1.png'
-import candidate2 from '../../assets/candidate-2.png'
-import candidate3 from '../../assets/candidate-3.png'
-import { candidates } from '../../simulation/candidates'
+import { ImageFrame } from '../../components/ImageFrame'
 import { simulationService } from '../../simulation/SimulationService'
 import type { FieldSearchInput, SearchResult, SearchScenario } from '../../simulation/types'
 import { BiometricFaceViewfinder } from './BiometricFaceViewfinder'
 import { BiometricFingerprintViewfinder } from './BiometricFingerprintViewfinder'
 import { ScreeningNotice } from './ScreeningNotice'
 
-const methods = [
-  { id: 'face', label: 'Face', description: 'ถ่ายภาพสด / จำลองกล้องวงจรปิด', icon: Camera },
-  { id: 'anpr', label: 'ANPR License Plate', description: 'สแกนป้ายทะเบียนยานพาหนะ', icon: Scan },
-  { id: 'fingerprint', label: 'Fingerprint', description: 'เครื่องอ่านลายนิ้วมือ FAP 20 จำลอง', icon: Fingerprint },
-  { id: 'idCard', label: 'ID Card', description: 'ชื่อและเลขประชาชนจากบัตร', icon: IdCard },
-] as const
-
-const presets = [
-  { name: 'นาย กิตติ สมมติ (หมายจับทรัพย์)', img: candidate1, id: '0000000000000', plate: '1กข 8899 กทม.' },
-  { name: 'นาย ธนา สมมติ (ผู้ต้องสงสัยคดีร่วม)', img: candidate2, id: '1111111111111', plate: '3ขค 4567 นนทบุรี' },
-  { name: 'นาย ปกรณ์ สมมติ (ไม่มีประวัติ)', img: candidate3, id: '2222222222222', plate: '5งจ 1234 ปทุมธานี' },
-]
-
-const scenarios: Array<{ id: SearchScenario; label: string; desc: string }> = [
-  { id: 'multiple', label: 'Multiple Candidates Match', desc: 'พบผู้สงสัยใกล้เคียงหลายราย' },
-  { id: 'exact-id', label: 'Exact Match Found', desc: 'ระบุตัวตนตรง 100%' },
-  { id: 'warrant', label: 'Active Warrant Alert (High Risk)', desc: 'เตือนพบหมายจับติดตัว' },
-  { id: 'conflict', label: 'Conflicting Records', desc: 'ข้อมูลไม่ตรงกันบางแหล่ง' },
-  { id: 'no-result', label: 'No Match Found', desc: 'ไม่พบประวัติในระบบ' },
-]
-
 export function FieldCheckPage() {
   const navigate = useNavigate()
   const [methods, setMethods] = useState<string[]>(['fingerprint'])
   const [fullName, setFullName] = useState('นาย กิตติ สมมติ')
   const [citizenId, setCitizenId] = useState('1372671005123')
-  const [scanning, setScanning] = useState(false)
-  const [hasSearched, setHasSearched] = useState(false)
-  const [progress, setProgress] = useState(72)
-  const [selectedCandidate, setSelectedCandidate] = useState<string | null>(null)
   const [cardPreview, setCardPreview] = useState<string | null>(null)
   const [cardReadMessage, setCardReadMessage] = useState('')
   const [cardCaptureState, setCardCaptureState] = useState<'idle' | 'capturing' | 'ready' | 'extracting' | 'complete'>('idle')
@@ -52,8 +24,6 @@ export function FieldCheckPage() {
   }
 
   function handleStartSearch() {
-    setScanning(true)
-    setHasSearched(true)
     const input: FieldSearchInput = {
       fullName: methods.includes('idCard') && fullName.trim() ? fullName.trim() : undefined,
       citizenId: methods.includes('idCard') && citizenId.trim() ? citizenId.trim() : undefined,
@@ -71,10 +41,12 @@ export function FieldCheckPage() {
         : 'multiple'
     const multiModal = [input.fingerprint, input.face, Boolean(input.fullName || input.citizenId)].filter(Boolean).length > 1
 
-    void simulationService.search(input, scenario, { multiModal }).then((result: SearchResult) => {
+    simulationService.search(input, scenario, { multiModal }).then((result: SearchResult) => {
       sessionStorage.setItem('ai-bip-field-result', JSON.stringify(result))
       navigate('/field-check/results')
-    }).finally(() => setScanning(false))
+    }).catch(() => {
+      sessionStorage.removeItem('ai-bip-field-result')
+    })
   }
 
   function handleCardImage(event: React.ChangeEvent<HTMLInputElement>) {
@@ -111,7 +83,6 @@ export function FieldCheckPage() {
     setMethods(['fingerprint'])
     setFullName('')
     setCitizenId('')
-    setProgress(0)
   }
 
   return (
@@ -196,7 +167,7 @@ export function FieldCheckPage() {
                 <div className={`id-card-capture ${cardCaptureState === 'capturing' || cardCaptureState === 'extracting' ? 'is-scanning' : ''}`}>
                   <input id="id-card-image" type="file" accept="image/*" capture="environment" onChange={handleCardImage} />
                   {cardPreview ? (
-                    <img src={cardPreview} alt="ตัวอย่างภาพบัตรประชาชนที่เลือก" />
+                    <ImageFrame src={cardPreview} alt="ตัวอย่างภาพบัตรประชาชนที่เลือก" />
                   ) : (
                     <div className={`id-card-mock ${cardCaptureState === 'capturing' || cardCaptureState === 'extracting' ? 'is-scanning' : ''}`} aria-label="หน้าบัตรประชาชนจำลอง">
                       <div className="id-card-mock-chip" />

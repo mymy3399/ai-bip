@@ -102,6 +102,13 @@ img {
   object-fit: contain;
 }
 
+.image-frame {
+  display: block;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
 .sr-only {
   position: absolute;
   width: 1px;

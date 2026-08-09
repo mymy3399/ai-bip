@@ -1,6 +1,8 @@
 import { useRef, useState } from 'react'
-import { Camera, Check, FileUp, Image, RefreshCw, ScanFace, Sparkles, Upload } from 'lucide-react'
+import { Camera, Check, FileUp, RefreshCw, Upload } from 'lucide-react'
 import candidate1 from '../../assets/candidate-1.png'
+import { advanceScanProgress } from './biometricScan'
+import { ImageFrame } from '../../components/ImageFrame'
 
 interface BiometricFaceViewfinderProps {
   onCaptureComplete?: () => void
@@ -30,7 +32,7 @@ export function BiometricFaceViewfinder({ onCaptureComplete }: BiometricFaceView
 
     let p = 10
     const interval = setInterval(() => {
-      p += Math.floor(Math.random() * 15) + 8
+      p = advanceScanProgress(p, 8)
       if (p >= 100) {
         p = 100
         clearInterval(interval)
@@ -61,7 +63,7 @@ export function BiometricFaceViewfinder({ onCaptureComplete }: BiometricFaceView
 
     let p = 15
     const interval = setInterval(() => {
-      p += Math.floor(Math.random() * 18) + 10
+      p = advanceScanProgress(p, 10)
       if (p >= 100) {
         p = 100
         clearInterval(interval)
@@ -117,7 +119,7 @@ export function BiometricFaceViewfinder({ onCaptureComplete }: BiometricFaceView
           </div>
 
           {/* Image Display */}
-          <img src={capturedImage} alt="ภาพคัดกรองใบหน้า" className="face-viewfinder-img" />
+          <ImageFrame src={capturedImage} alt="ภาพคัดกรองใบหน้า" className="face-viewfinder-img" />
 
           {/* AI Face Detection Bounding Box with Corner Brackets & Landmarks */}
           {(isCapturing || isComplete) && (

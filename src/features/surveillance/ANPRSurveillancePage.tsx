@@ -9,21 +9,17 @@ import {
   Compass,
   FilePlus2,
   Eye,
-  Filter,
-  Flame,
   MapPin,
-  Navigation,
   PhoneCall,
   RefreshCw,
   Search,
   ScanLine,
   ShieldAlert,
-  Upload,
   Zap,
 } from 'lucide-react'
 import anprCctvVehicle from '../../assets/anpr-cctv-vehicle.png'
-import candidate3 from '../../assets/candidate-3.png'
 import { TacticalGeofenceMap } from './TacticalGeofenceMap'
+import { ImageFrame } from '../../components/ImageFrame'
 
 interface ANPRDetection {
   id: string
@@ -274,7 +270,7 @@ export function ANPRSurveillancePage() {
                 <small>ระบบจะสกัดเลขทะเบียนจากภาพเพื่อค้นหา</small>
                 <input type="file" accept="image/*" capture="environment" onChange={handleTransportImage} />
               </label>
-              {transportImage && <img src={transportImage} alt="ภาพป้ายทะเบียนที่เลือก" className="transport-image-preview" />}
+              {transportImage && <ImageFrame src={transportImage} alt="ภาพป้ายทะเบียนที่เลือก" className="transport-image-preview" />}
               <button type="button" className="btn-primary transport-check-btn" disabled={isTransportChecking || (!transportPlate.trim() && !transportImage)} onClick={handleTransportCheck}>
                 <Search size={16} /> {isTransportChecking ? 'กำลังตรวจสอบ...' : 'ตรวจสอบข้อมูลทะเบียน'}
               </button>
@@ -416,7 +412,7 @@ export function ANPRSurveillancePage() {
               <div className="video-scan-laser" />
             </div>
 
-            <img src={anprCctvVehicle} alt="ภาพรถยนต์จากกล้องวงจรปิด ANPR" className="cctv-feed-img" />
+            <ImageFrame src={anprCctvVehicle} alt="ภาพรถยนต์จากกล้องวงจรปิด ANPR" className="cctv-feed-img" />
           </div>
 
           {/* Vehicle Metadata Box */}

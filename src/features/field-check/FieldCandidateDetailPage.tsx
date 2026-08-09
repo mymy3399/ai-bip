@@ -1,34 +1,24 @@
 import { useState } from 'react'
 import {
-  AlertCircle,
   AlertTriangle,
   ArrowLeft,
-  Calendar,
   Car,
   CheckCircle2,
   Clock,
-  CreditCard,
   Database,
-  Download,
-  FileCheck2,
   FileText,
-  Fingerprint,
-  Globe,
   IdCard,
-  Info,
-  MapPin,
   Network,
   PhoneCall,
   Printer,
   ShieldAlert,
   ShieldCheck,
   UserCheck,
-  UserRound,
   Users,
 } from 'lucide-react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { candidates } from '../../simulation/candidates'
-import { ScreeningNotice } from './ScreeningNotice'
+import { ImageFrame } from '../../components/ImageFrame'
 
 const sampleAssociates = [
   { name: 'นาย วิชัย สมมติ', role: 'ผู้ต้องสงสัยร่วม', relation: 'ผู้ขับขี่พาหนะหลบหนี', risk: 'HIGH', img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80' },
@@ -57,10 +47,6 @@ export function FieldCandidateDetailPage() {
   function handleDispatchBackup() {
     setActionDone('🚨 แจ้งส่งกำลังบำรุง/สายตรวจสนับสนุนเรียบร้อยแล้ว (Dispatch Alert Sent)')
     setTimeout(() => setActionDone(''), 4000)
-  }
-
-  function handleExportPDF() {
-    window.print()
   }
 
   return (
@@ -94,7 +80,7 @@ export function FieldCandidateDetailPage() {
       <section className="surface-panel dossier-hero-card">
         <div className="hero-portrait-col">
           <div className="portrait-frame">
-            <img src={candidate.portraitUrl} alt={candidate.displayName} />
+            <ImageFrame src={candidate.portraitUrl} alt={candidate.displayName} />
             <span className="frame-corner top-l" />
             <span className="frame-corner top-r" />
             <span className="frame-corner bot-l" />
@@ -246,7 +232,7 @@ export function FieldCandidateDetailPage() {
               {/* Subject Central Node */}
               <div className="node-card target-subject-node">
                 <span className="node-tag">TARGET SUBJECT</span>
-                <img src={candidate.portraitUrl} alt={candidate.displayName} className="node-avatar" />
+                <ImageFrame src={candidate.portraitUrl} alt={candidate.displayName} className="node-avatar" />
                 <h4>{candidate.displayName}</h4>
                 <p className="subject-id-code">ID: 1372671005123</p>
                 <div className="subject-match-pill">AFIS MATCH {candidate.similarity}%</div>
@@ -260,7 +246,7 @@ export function FieldCandidateDetailPage() {
                 <div className="node-items-list">
                   {sampleAssociates.map((ass, i) => (
                     <div key={i} className="node-item">
-                      <img src={ass.img} alt={ass.name} className="mini-avatar" />
+                      <ImageFrame src={ass.img} alt={ass.name} className="mini-avatar" />
                       <div className="node-item-copy">
                         <strong>{ass.name}</strong>
                         <small>{ass.role} • {ass.relation}</small>
@@ -377,4 +363,3 @@ export function FieldCandidateDetailPage() {
     </div>
   )
 }
-

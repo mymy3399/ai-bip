@@ -3,7 +3,9 @@ import { ArrowLeft, LockKeyhole, Moon, ShieldCheck, Sun } from 'lucide-react'
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import mark from '../assets/ai-bip-mark.png'
 import { DemoBadge } from '../components/DemoBadge'
+import { ImageFrame } from '../components/ImageFrame'
 import { primaryRoutes, routeMatches } from './routes'
+import { dispatchShellAction } from './shellActions'
 
 function getPageTitle(pathname: string): string {
   return primaryRoutes.find((route) => routeMatches(pathname, route.path))?.label ?? 'AI-BIP'
@@ -12,7 +14,7 @@ function getPageTitle(pathname: string): string {
 function Brand() {
   return (
     <div className="brand-lockup">
-      <img src={mark} alt="ตราสัญลักษณ์โครงการ AI-BIP" />
+      <ImageFrame src={mark} alt="ตราสัญลักษณ์โครงการ AI-BIP" />
       <span>
         <strong>AI-BIP</strong>
         <small>Police AI Platform</small>
@@ -67,7 +69,7 @@ export function AppShell() {
           <button
             type="button"
             className="theme-toggle-btn"
-            onClick={toggleTheme}
+            onClick={() => dispatchShellAction('toggle-theme', { 'toggle-theme': toggleTheme, 'navigate-back': () => navigate(-1) })}
             aria-label={`สลับเป็นโหมด ${theme === 'dark' ? 'สว่าง (Light Mode)' : 'มืด (Dark Mode)'}`}
           >
             {theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />}
@@ -110,7 +112,7 @@ export function AppShell() {
             <button
               type="button"
               className="theme-toggle-btn theme-toggle-btn--header"
-              onClick={toggleTheme}
+              onClick={() => dispatchShellAction('toggle-theme', { 'toggle-theme': toggleTheme, 'navigate-back': () => navigate(-1) })}
               aria-label={`สลับเป็นโหมด ${theme === 'dark' ? 'สว่าง' : 'มืด'}`}
             >
               {theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />}
@@ -131,4 +133,3 @@ export function AppShell() {
     </div>
   )
 }
-

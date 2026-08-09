@@ -344,7 +344,7 @@
   font-style: normal;
 }
 
-.id-card-capture img {
+.id-card-capture .image-frame {
   width: 48px;
   height: 32px;
   flex: none;
@@ -353,7 +353,7 @@
   border: 1px solid var(--border);
 }
 
-.id-card-capture.is-scanning:has(img)::before {
+.id-card-capture.is-scanning:has(.image-frame)::before {
   content: '';
   position: absolute;
   z-index: 2;

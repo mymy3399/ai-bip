@@ -299,7 +299,7 @@
   backdrop-filter: blur(10px);
 }
 
-.image-lightbox img {
+.image-lightbox .image-frame {
   width: min(92vw, 760px);
   height: min(86vh, 760px);
   object-fit: contain;

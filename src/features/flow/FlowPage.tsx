@@ -98,7 +98,7 @@ export function FlowPage() {
     return () => clearInterval(timer)
   }, [isPlaying])
 
-  const step = pipelineSteps[activeStep]
+  const step = pipelineSteps.at(activeStep) ?? pipelineSteps.at(0)!
 
   return (
     <section className="flow-page">
@@ -199,7 +199,7 @@ export function PresentationPage() {
   const next = () => setActive((i) => (i + 1) % pipelineSteps.length)
   const prev = () => setActive((i) => (i - 1 + pipelineSteps.length) % pipelineSteps.length)
 
-  const step = pipelineSteps[active]
+  const step = pipelineSteps.at(active) ?? pipelineSteps.at(0)!
 
   return (
     <div
@@ -250,4 +250,3 @@ export function PresentationPage() {
     </div>
   )
 }
-

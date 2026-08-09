@@ -1,15 +1,11 @@
 import { useState } from 'react'
 import {
-  AlertTriangle,
   Car,
   CheckCircle2,
   Compass,
   Lock,
-  MapPin,
   Navigation,
   Radio,
-  ShieldAlert,
-  Zap,
 } from 'lucide-react'
 
 interface PatrolUnit {
@@ -40,7 +36,7 @@ export function TacticalGeofenceMap({
   const [showEscapeRadius, setShowEscapeRadius] = useState(true)
   const [dispatchedUnits, setDispatchedUnits] = useState<string[]>([])
   const [activeNotification, setActiveNotification] = useState<string | null>(null)
-  const [selectedRadius, setSelectedRadius] = useState<'5m' | '10m' | '15m'>('5m')
+  const [selectedRadius] = useState<'5m' | '10m' | '15m'>('5m')
 
   function handleDispatchUnit(unit: PatrolUnit) {
     if (dispatchedUnits.includes(unit.id)) return

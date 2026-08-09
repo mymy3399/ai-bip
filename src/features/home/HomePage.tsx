@@ -1,29 +1,22 @@
 import { useState } from 'react'
 import {
   Activity,
-  AlertTriangle,
   ArrowRight,
-  BarChart3,
   Bot,
   Building2,
-  Calendar,
   CheckCircle2,
   Clock,
-  Database,
   Download,
   FileText,
   Filter,
   Globe,
-  IdCard,
   MapPin,
   Network,
   Scale,
   ScanFace,
   Search,
   ShieldCheck,
-  UserCheck,
   UserRound,
-  Users,
   Zap,
 } from 'lucide-react'
 import { Link } from 'react-router-dom'
@@ -224,7 +217,7 @@ export function HomePage() {
       `"${l.ip}"`,
     ])
 
-    const csvContent = '\uFEFF' + [headers.join(','), ...rows.map((r) => r.join(','))].join('\n')
+    const csvContent = `\uFEFF${[headers.join(','), ...rows.map((r) => r.join(','))].join('\n')}`
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
     const url = URL.createObjectURL(blob)
     const link = document.createElement('a')
@@ -580,5 +573,3 @@ export function HomePage() {
     </div>
   )
 }
-
-

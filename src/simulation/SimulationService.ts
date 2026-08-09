@@ -10,7 +10,6 @@ function wait(delayMs: number): Promise<void> {
 
 export const simulationService = {
   async search(input: FieldSearchInput, scenario: SearchScenario = 'multiple', options: SearchOptions = {}): Promise<SearchResult> {
-    void input
     await wait(options.delayMs ?? 420)
     const fixture = getScenarioFixture(scenario)
     const rankedCandidates = rankCandidates(fixture.candidates)

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { Bot, Check, Copy, Download, FileText, MessageSquare, RefreshCw, Send, ShieldCheck, Sparkles, Trash2, User } from 'lucide-react'
+import { Bot, Check, Copy, FileText, Send, ShieldCheck, Sparkles, Trash2, User } from 'lucide-react'
 
 interface AssistantDef {
   id: string
@@ -127,7 +127,7 @@ export function AssistantsPage() {
   }
 
   function handleCopy(text: string, idx: number) {
-    navigator.clipboard.writeText(text)
+    navigator.clipboard.writeText(text).catch(() => undefined)
     setCopiedIdx(idx)
     setTimeout(() => setCopiedIdx(null), 2500)
   }

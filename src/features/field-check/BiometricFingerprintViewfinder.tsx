@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { Check, Fingerprint, Play, RefreshCw, Zap } from 'lucide-react'
+import { Check, Fingerprint, RefreshCw } from 'lucide-react'
+import { advanceScanProgress, minutiaeForProgress } from './biometricScan'
 
 interface BiometricFingerprintViewfinderProps {
   onScanComplete?: () => void
@@ -20,7 +21,7 @@ export function BiometricFingerprintViewfinder({ onScanComplete }: BiometricFing
 
     let current = 5
     const interval = setInterval(() => {
-      current += Math.floor(Math.random() * 14) + 6
+      current = advanceScanProgress(current, 6)
       if (current >= 100) {
         current = 100
         clearInterval(interval)
@@ -29,7 +30,7 @@ export function BiometricFingerprintViewfinder({ onScanComplete }: BiometricFing
         setMinutiaePoints(64)
         if (onScanComplete) onScanComplete()
       } else {
-        setMinutiaePoints(Math.floor((current / 100) * 64))
+        setMinutiaePoints(minutiaeForProgress(current))
       }
       setLiveProgress(current)
     }, 140)

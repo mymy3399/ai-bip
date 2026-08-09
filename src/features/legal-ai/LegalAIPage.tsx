@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { AlertTriangle, BookOpen, Check, CheckCircle2, ChevronRight, Copy, FileText, Gavel, Loader2, Printer, Scale, Search, ShieldAlert, Sparkles, UserCheck, X } from 'lucide-react'
+import { BookOpen, Check, CheckCircle2, ChevronRight, Copy, FileText, Gavel, Loader2, Printer, Scale, Search, Sparkles, UserCheck, X } from 'lucide-react'
 
 interface Charge {
   title: string
@@ -189,12 +189,6 @@ interface FactMatrixItem {
   state: 'match' | 'pending'
 }
 
-const scenarioCharges: Record<string, Charge[]> = {
-  'theft-night': [chargesDatabase[0], chargesDatabase[3]],
-  'computer-fraud': [chargesDatabase[1]],
-  'robbery-assault': [chargesDatabase[2]],
-}
-
 const scenarioFactMatrices: Record<string, FactMatrixItem[]> = {
   'theft-night': [
     { label: 'ทรัพย์ของผู้อื่นถูกนำไป', status: 'พบข้อมูลในพฤติการณ์', state: 'match' },
@@ -232,6 +226,40 @@ const relatedStatuteSections: Record<string, string[]> = {
   'robbery-assault': ['มาตรา 339', 'มาตรา 340'],
 }
 
+function getScenarioCharges(scenarioId: string): Charge[] {
+  if (scenarioId === 'theft-night') return [chargesDatabase[0], chargesDatabase[3]]
+  if (scenarioId === 'computer-fraud') return [chargesDatabase[1]]
+  if (scenarioId === 'robbery-assault') return [chargesDatabase[2]]
+  return []
+}
+
+function getScenarioFactMatrix(scenarioId: string): FactMatrixItem[] {
+  if (scenarioId === 'theft-night') return scenarioFactMatrices['theft-night']
+  if (scenarioId === 'computer-fraud') return scenarioFactMatrices['computer-fraud']
+  if (scenarioId === 'robbery-assault') return scenarioFactMatrices['robbery-assault']
+  return []
+}
+
+function getScenarioPrecedents(scenarioId: string): SupremeCourtPrecedent[] {
+  if (scenarioId === 'theft-night') return scenarioPrecedents['theft-night']
+  if (scenarioId === 'computer-fraud') return scenarioPrecedents['computer-fraud']
+  if (scenarioId === 'robbery-assault') return scenarioPrecedents['robbery-assault']
+  return mockPrecedents
+}
+
+function getScenarioBail(scenarioId: string): BailAssessment {
+  if (scenarioId === 'computer-fraud') return scenarioBailAssessments['computer-fraud']
+  if (scenarioId === 'robbery-assault') return scenarioBailAssessments['robbery-assault']
+  return scenarioBailAssessments['theft-night']
+}
+
+function getRelatedSections(scenarioId: string): string[] {
+  if (scenarioId === 'theft-night') return relatedStatuteSections['theft-night']
+  if (scenarioId === 'computer-fraud') return relatedStatuteSections['computer-fraud']
+  if (scenarioId === 'robbery-assault') return relatedStatuteSections['robbery-assault']
+  return []
+}
+
 export function LegalAIPage() {
   const [activeSubTab, setActiveSubTab] = useState<'analyzer' | 'precedents' | 'bail_risk' | 'library'>('analyzer')
   const [facts, setFacts] = useState(scenarioPresets[0].text)
@@ -244,13 +272,13 @@ export function LegalAIPage() {
   const [copied, setCopied] = useState(false)
   const [searchFilter, setSearchFilter] = useState('')
 
-  const currentCharges = scenarioCharges[selectedScenarioId] ?? []
-  const currentFactMatrix = scenarioFactMatrices[selectedScenarioId] ?? []
-  const activePrecedents = scenarioPrecedents[selectedScenarioId] ?? mockPrecedents
-  const activeBail = scenarioBailAssessments[selectedScenarioId] ?? scenarioBailAssessments['theft-night']
+  const currentCharges = getScenarioCharges(selectedScenarioId)
+  const currentFactMatrix = getScenarioFactMatrix(selectedScenarioId)
+  const activePrecedents = getScenarioPrecedents(selectedScenarioId)
+  const activeBail = getScenarioBail(selectedScenarioId)
   const activeScenario = scenarioPresets.find((scenario) => scenario.id === selectedScenarioId) ?? scenarioPresets[0]
-  const relatedSections = relatedStatuteSections[selectedScenarioId] ?? []
-  const activeCharge = currentCharges[activeChargeIdx] ?? currentCharges[0] ?? chargesDatabase[0]
+  const relatedSections = getRelatedSections(selectedScenarioId)
+  const activeCharge = currentCharges.at(activeChargeIdx) ?? currentCharges.at(0) ?? chargesDatabase[0]
 
   function applyPreset(presetText: string, scenarioId: string) {
     setFacts(presetText)
@@ -286,7 +314,7 @@ ${facts}
 ประเด็นที่ต้องสอบสวนเพิ่มเติม: ${activeCharge.ask}
 อ้างอิง: ${activeCharge.source}`
 
-    navigator.clipboard.writeText(memoText)
+    navigator.clipboard.writeText(memoText).catch(() => undefined)
     setCopied(true)
     setTimeout(() => setCopied(false), 3000)
   }

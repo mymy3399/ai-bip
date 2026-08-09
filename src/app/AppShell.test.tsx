@@ -6,7 +6,7 @@ describe('App shell navigation', () => {
     render(<App />)
 
     for (const label of ['Biometric Field Check', 'Legal AI Assistant', 'Police AI Assistants', 'Operational Flow']) {
-      expect(screen.getByRole('link', { name: new RegExp(label) })).toBeInTheDocument()
+      expect(screen.getByRole('link', { name: (name) => name.startsWith(label) })).toBeInTheDocument()
     }
   })
 
